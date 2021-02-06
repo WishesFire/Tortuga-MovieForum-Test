@@ -4,12 +4,27 @@ from django.utils.timezone import now
 from django.urls import reverse
 
 
+class Gender(models.Model):
+    """
+        Gender: Gender actor
+    """
+    name = models.CharField()
+
+    class Meta:
+        verbose_name = 'Gender'
+        verbose_name_plural = 'Genders'
+
+    def __str__(self):
+        return self.name
+
+
 class Actor(models.Model):
     """
         Actors: Information about current actor
     """
     name = models.CharField('Name and Surname', max_length=50)
     slug = models.SlugField(max_length=50, null=False, unique=True)
+    gender = models.ManyToManyField(Gender, verbose_name="genders", related_name='actor_gender')
     age = models.PositiveSmallIntegerField('Age', default=0)
     birthday = models.DateField("Birthday", default=now())
     description = models.TextField(max_length=250)

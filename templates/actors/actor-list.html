@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+<title>{% block title %}Tortuga - Actors{% endblock title %}</title>
 
-</body>
-</html>
+{% block content %}
+    <form action="{% url 'filter_genre' %}" method="get">
+        <div id="list-example" class="list-group">
+            <h3>Фильтр</h3>
+            {% for gender in view.get_gender %}
+                <input type="checkbox" class="checked" name="genre" value="{{ gender.name }}">
+                <span class="list-group-item list-group-item-action">{{ gender.name }}</span>
+            {% endfor %}
+        </div>
+        <button type="submit">Найти</button>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for actor in actor_list %}
+            <div class="col">
+                <div class="card">
+                  <img src="{{ actor.main_image.url }}" class="card-img-top" alt="Logo">
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="{{ actor.get_absolute_url }}"></a>{{ actor.name }}</h5>
+                    <h4 class="card-title">{{ actor.age }}</h4>
+                  </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

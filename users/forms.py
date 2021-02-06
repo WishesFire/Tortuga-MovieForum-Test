@@ -56,11 +56,11 @@ class RegistrationForm(forms.ModelForm):
             raise forms.ValidationError(f'Ник {username} занят')
         return username
 
-    def clean_password2(self):
+    def clean(self):
         cd = self.cleaned_data
         if cd['password1'] != cd['password2']:
             raise forms.ValidationError('Неправильный пароль!')
-        return cd
+        return self.cleaned_data
 
     class Meta:
         model = User

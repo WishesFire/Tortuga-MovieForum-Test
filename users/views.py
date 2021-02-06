@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import LoginForm, RegistrationForm, UserEditForm, ProfileEditForm
+from django.contrib.auth.backends import BaseBackend
 from .models import Profile
 from users.email import create_email_message
 from django.contrib.auth import authenticate, login
@@ -54,7 +55,7 @@ def login_user(request, *args, **kwargs):
     return render(request, 'users/login.html', {'form': form})
 
 
-class EmailAuthBackend(object):
+class EmailAuthBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None):
         user = User.objects.get(email=username)
         if user is not None:

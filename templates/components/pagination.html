@@ -1,0 +1,12 @@
+<nav aria-label="...">
+  <ul class="pagination pagination-lg">
+    {% for page in page_obj.paginator.page_range %}
+        {% if page_obj.number == page %}
+            <li class="page-item active" aria-current="page"><span class="page-link">{{ page }}</span></li>
+        {% elif page > page_obj.number|add:-3 and page < page_obj.number|add:3 and page != page_obj.paginator.num_pages %}
+            <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+        {% endif %}
+    {% endfor %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.count }}">page_obj.paginator.num_pages</a></li>
+  </ul>
+</nav>

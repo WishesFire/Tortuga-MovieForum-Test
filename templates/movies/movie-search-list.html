@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+<title>{% block title %}Tortuga - Movies{% endblock title %}</title>
+
+{% block content %}
+    {% if query %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for movie in results %}
+                <div class="col">
+                    <div class="card">
+                      <img src="{{ movie.main_image.url }}" class="card-img-top" alt="Logo">
+                      <div class="card-body">
+                        <h5 class="card-title"><a href="{{ movie.get_absolute_url }}"></a>{{ movie.name }}</h5>
+                        <p class="card-text">{{ movie.description }}</p>
+                      </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h1>Результатов 0 на ваш запрос(</h1>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock content %}
+
+{% include 'components/pagination.html' %}

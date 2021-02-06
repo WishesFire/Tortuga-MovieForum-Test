@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Movie, Actor
+from .services import pagination_page, search_movie
+from .models import Movie, Actor, Genre, Gender
 from django.views.generic.base import View
 
 
@@ -8,10 +9,22 @@ class MainPage(View):
         return render(request, 'main_page.html')
 
 
-class MoviesView(View):
+class GenreGet:
+    def get_genres(self):
+        return Genre.objects.all()
+
+
+class GenderGet:
+    def get_gender(self):
+        return Gender.objects.all()
+
+
+class MoviesView(GenreGet, View):
     def get(self, request):
         movies = Movie.objects.all()
-        return render(request, 'movies/movie-list.html', {'movie_list': movies})
+        page, movies = pagination_page(request, movies)
+
+        return render(request, 'movies/movie-list.html', {'page_obj': page, 'movie_list': movies})
 
 
 class MovieDetailView(View):
@@ -20,13 +33,19 @@ class MovieDetailView(View):
         return render(request, 'movies/movie-detail.html', {'movie': movie})
 
 
-class ActorsView(View):
+class ActorsView(GenderGet, View):
     def get(self, request):
-        #TODO Сортировка по оценке
-        pass
+        actors = Actor.objects.all()
+        return render(request, 'actors/actor-detail.html', {'actor_list': actors})
 
 
 class ActorDetailView(View):
     def get(self, request, slug):
-        movie = get_object_or_404(Actor, url=slug)
-        return render(request, 'actors/actor-detail.html', {'actor': movie})
+        actor = get_object_or_404(Actor, url=slug)
+        return render(request, 'actors/actor-detail.html', {'actor': actor})
+
+
+class SearchView(View):
+    def get(self, request):
+        form, query, results = search_movie(request)
+        return render(request, 'movies/movie-search-list.html', {'form': form, 'query': query, 'results': results})

@@ -1,19 +1,31 @@
 {% extends 'base.html' %}
 <title>{% block title %}Tortuga - Movies{% endblock title %}</title>
 
-
 {% block content %}
+    <form action="{% url 'filter_genre' %}" method="get">
+        <div id="list-example" class="list-group">
+            <h3>Фильтр</h3>
+            {% for genre in view.get_genres %}
+                <input type="checkbox" class="checked" name="genre" value="{{ genre.name }}">
+                <span class="list-group-item list-group-item-action">{{ genre.name }}</span>
+            {% endfor %}
+        </div>
+        <button type="submit">Найти</button>
+    </form>
+
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for movie in movie_list %}
             <div class="col">
                 <div class="card">
-                  <img src="{{ movie_list.main_image.url }}" class="card-img-top" alt="Logo">
+                  <img src="{{ movie.main_image.url }}" class="card-img-top" alt="Logo">
                   <div class="card-body">
-                    <h5 class="card-title">{{ movie_list.name }}</h5>
-                    <p class="card-text">{{ movie_list.description }}</p>
+                    <h5 class="card-title"><a href="{{ movie.get_absolute_url }}"></a>{{ movie.name }}</h5>
+                    <p class="card-text">{{ movie.description }}</p>
                   </div>
                 </div>
             </div>
         {% endfor %}
     </div>
 {% endblock content %}
+
+{% include 'components/pagination.html' %}
