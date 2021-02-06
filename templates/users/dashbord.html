@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Tortuga - Edit account{% endblock %}
+
+{% block content %}
+    <h1>Edit your account</h1>
+    <form action="." method="post" enctype="multipart/form-data">
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="Save changes">
+    </form>
+    <a href="{% url 'password_change' %}">Сменить пароль</a>
+{% endblock %}

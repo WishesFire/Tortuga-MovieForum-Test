@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+<title>{% block title %}Tortuga - {{ movie.name }}{% endblock title %}</title>
+
+{% block content %}
+    {% for image in movie.footagemovie_set.all %}
+        <img src="{{ image.image.url }}" class="movie-shots">
+    {% endfor %}
+{% endblock content %}

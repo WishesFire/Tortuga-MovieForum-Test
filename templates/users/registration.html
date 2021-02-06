@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tortuga - Sign up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+    <div class="text-center" style="padding:50px 0">
+	    <div class="logo">Register</div>
+	    <div class="login-form-1">
+            {% if messages %}
+                <ul class="message">
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form action="" id="register-form" method="post" class="text-left">
+                {% csrf_token %}
+                <div class="login-form-main-message"></div>
+                <div class="main-login-form">
+                    <div class="login-group">
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+                            {{ form.username.error }}
+                            <label for="{{ form.username.id_for_label }}" class="sr-only">Email address</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.email.error }}
+                            <label for="{{ form.email.id_for_label }}" class="sr-only">Email</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.password1.error }}
+                            <label for="{{ form.password1.id_for_label }}" class="sr-only">Password</label>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.password2.error }}
+                            <label for="{{ form.password2.id_for_label }}" class="sr-only">Password Confirm</label>
+                            {{ form.password2 }}
+                        </div>
+                        <div class="form-group login-group-checkbox">
+                            <input type="checkbox" class="" id="reg_agree" name="reg_agree">
+                            <label for="reg_agree">i agree with <a href="#">terms</a></label>
+                        </div>
+                    </div>
+                    <button class="btn btn-info" type="button" name="showpassword" id="showpassword" value="Show Password">Show password</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="etc-login-form">
+                    <p>already have an account? <a href="{% url 'login' %}">Click here</a></p>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/js/show-password.js"></script>
+</body>
+</html>

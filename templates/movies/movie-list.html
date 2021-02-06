@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+<title>{% block title %}Tortuga - Movies{% endblock title %}</title>
+
+
+{% block content %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for movie in movie_list %}
+            <div class="col">
+                <div class="card">
+                  <img src="{{ movie_list.main_image.url }}" class="card-img-top" alt="Logo">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ movie_list.name }}</h5>
+                    <p class="card-text">{{ movie_list.description }}</p>
+                  </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
