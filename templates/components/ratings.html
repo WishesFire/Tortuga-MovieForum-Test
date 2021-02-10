@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="star-widget">
+        <form class="rate-form" action="{% url 'add-rating' %}" method="post" id="{{ movie.id }}">
+            {% csrf_token %}
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-10"></button>
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-9"></button>
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-8"></button>
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-7"></button>
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-6"></button>
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-5"></button>
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-4"></button>
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-3"></button>
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-2"></button>
+            <button class="fas fa-star my-btn" type="submit" name="rate" id="rate-1"></button>
+        </form>
+        <br>
+        <div class="confirm-box"></div>
+    </div>
+</div>

@@ -2,7 +2,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from .forms import SearchForm
-from .models import Movie
+from .models import Movie, Actor
 
 
 def pagination_page(request, index_model):
@@ -27,8 +27,12 @@ def search_movie(request):
         query = form.cleaned_data['query']
         search_vector = SearchVector('name')
         search_query = SearchQuery(query)
-        results = Movie.objects.annotate(search=search_vector,
+        results_movie = Movie.objects.annotate(search=search_vector,
                                          rank=SearchRank(search_vector, search_query))\
                                          .filter(search=search_query).order_by('-rank')
+        results_actor = Actor.objects.annotate(search=search_vector, rank=SearchRank(search_vector, search_query))\
+                                         .filter(search=search_query).order_by('-rank')
+
+        results = results_movie + results_actor
 
         return form, query, results

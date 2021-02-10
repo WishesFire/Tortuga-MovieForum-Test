@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .services import pagination_page, search_movie
+from ratings.views import push_rating
 from .models import Movie, Actor, Genre, Gender
 from django.views.generic.base import View
+from ratings.models import RatingStar
 
 
 class MainPage(View):
@@ -31,6 +33,9 @@ class MovieDetailView(View):
     def get(self, request, slug):
         movie = get_object_or_404(Movie, url=slug)
         return render(request, 'movies/movie-detail.html', {'movie': movie})
+
+    def post(self, request, slug):
+        push_rating(request, slug)
 
 
 class ActorsView(GenderGet, View):

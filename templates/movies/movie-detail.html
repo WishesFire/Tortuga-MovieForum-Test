@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock head %}
 <title>{% block title %}Tortuga - {{ movie.name }}{% endblock title %}</title>
 
 {% block content %}
@@ -6,3 +9,9 @@
         <img src="{{ image.image.url }}" class="movie-shots">
     {% endfor %}
 {% endblock content %}
+
+{% include 'components/ratings' %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/make_rating.js' %}"></script>
+{% endblock js %}

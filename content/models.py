@@ -103,36 +103,6 @@ class FootageActor(models.Model):
     image = models.ImageField('Photos of the actor', upload_to='actor_shots/')
     actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name='images')
 
-#
-# Rating System
-#
-
-
-class RatingStar(models.Model):
-    """
-        Rating: Evaluation of the film in general and users
-                Unit of designation
-    """
-    star_rating = models.PositiveSmallIntegerField(default=0, blank=True)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-
-    class Meta:
-        abstract = True
-
-
-class ReviewForum(RatingStar):
-    """
-        ReviewForum: It is rating from user
-    """
-    #TODO Make user registation for make rating
-    name_ip_user = models.CharField(max_length=20)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
-
-    class Meta:
-        db_table = 'review-forum'
-        verbose_name = 'review'
-        verbose_name_plural = 'reviews'
-
 
 #
 # Comment System
